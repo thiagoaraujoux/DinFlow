@@ -16,22 +16,41 @@ namespace DinFlow.Controllers
 
                 // Cálculo dos totais, tratando valores nulos e filtrando por UserId
                 var totalReceitas = db.Receitas
-                    .Where(r => r.UserId == userId) // Filtra receitas do usuário autenticado
-                    .Sum(r => (decimal?)r.Valor) ?? 0;
+                    .Where(r => r.UserId == userId)
+                    .Sum(r => (decimal?)r.Valor) ?? 0m; // Utilize 0m para um decimal
 
                 var totalDespesas = db.Despesas
-                    .Where(d => d.UserId == userId) // Filtra despesas do usuário autenticado
-                    .Sum(d => (decimal?)d.Valor) ?? 0;
+                    .Where(d => d.UserId == userId)
+                    .Sum(d => (decimal?)d.Valor) ?? 0m; // Utilize 0m para um decimal
 
                 var totalEconomias = db.Economias
-                    .Where(e => e.UserId == userId) // Filtra economias do usuário autenticado
-                    .Sum(e => (decimal?)e.Valor) ?? 0;
+                    .Where(e => e.UserId == userId)
+                    .Sum(e => (decimal?)e.Valor) ?? 0m; // Utilize 0m para um decimal
+
+                // Preenche as listas de detalhes
+                var receitasDetalhes = db.Receitas
+                    .Where(r => r.UserId == userId)
+                    .Select(r => new ReceitaDetalhe { Valor = (decimal)r.Valor, Descricao = r.Descricao })
+                    .ToList();
+
+                var despesasDetalhes = db.Despesas
+                    .Where(d => d.UserId == userId)
+                    .Select(d => new DespesaDetalhe { Valor = d.Valor, Descricao = d.Descricao })
+                    .ToList();
+
+                var economiasDetalhes = db.Economias
+                    .Where(e => e.UserId == userId)
+                    .Select(e => new EconomiaDetalhe { Valor = e.Valor })
+                    .ToList();
 
                 var model = new DashboardViewModel
                 {
                     TotalReceitas = totalReceitas,
                     TotalDespesas = totalDespesas,
-                    TotalEconomias = totalEconomias
+                    TotalEconomias = totalEconomias,
+                    Receitas = receitasDetalhes,
+                    Despesas = despesasDetalhes,
+                    Economias = economiasDetalhes
                 };
 
                 return View(model);

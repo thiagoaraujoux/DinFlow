@@ -16,6 +16,21 @@
                     <h1 class="card-title pricing-card-title">R$ @Model.TotalReceitas.ToString("N2")</h1>
                     <p class="card-text">Visualize suas receitas totais.</p>
                     <a href="@Url.Action("Create", "Receitas")" class="btn btn-lg btn-block btn-outline-primary">Cadastrar Receita</a>
+
+                    <!-- Botão para expandir o resumo de receitas -->
+                    <button class="btn btn-sm btn-outline-secondary mt-2 toggle-collapse" data-target="#receitasCollapse">
+                        Ver detalhes <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <!-- Resumo de receitas (collapse) -->
+                    <div class="collapse mt-2" id="receitasCollapse">
+                        <ul class="list-group">
+                            @foreach (var receita in Model.Receitas)
+                            {
+                                <li class="list-group-item">R$ @receita.Valor.ToString("N2") - @receita.Descricao</li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,6 +43,21 @@
                     <h1 class="card-title pricing-card-title">R$ @Model.TotalDespesas.ToString("N2")</h1>
                     <p class="card-text">Visualize suas despesas totais.</p>
                     <a href="@Url.Action("Create", "Despesas")" class="btn btn-lg btn-block btn-outline-primary">Cadastrar Despesa</a>
+
+                    <!-- Botão para expandir o resumo de despesas -->
+                    <button class="btn btn-sm btn-outline-secondary mt-2 toggle-collapse" data-target="#despesasCollapse">
+                        Ver detalhes <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <!-- Resumo de despesas (collapse) -->
+                    <div class="collapse mt-2" id="despesasCollapse">
+                        <ul class="list-group">
+                            @foreach (var despesa in Model.Despesas)
+                            {
+                                <li class="list-group-item">R$ @despesa.Valor.ToString("N2") - @despesa.Descricao</li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,9 +70,35 @@
                     <h1 class="card-title pricing-card-title">R$ @Model.TotalEconomias.ToString("N2")</h1>
                     <p class="card-text">Visualize suas economias totais.</p>
                     <a href="@Url.Action("Create", "Economias")" class="btn btn-lg btn-block btn-outline-primary">Cadastrar Economia</a>
+
+                    <!-- Botão para expandir o resumo de economias -->
+                    <button class="btn btn-sm btn-outline-secondary mt-2 toggle-collapse" data-target="#economiasCollapse">
+                        Ver detalhes <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <!-- Resumo de economias (collapse) -->
+                    <div class="collapse mt-2" id="economiasCollapse">
+                        <ul class="list-group">
+                            @foreach (var economia in Model.Economias)
+                            {
+                                <li class="list-group-item">R$ @economia.Valor.ToString("N2") - @economia.Descricao</li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</main>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.toggle-collapse').click(function () {
+            var target = $(this).data('target');
+            $(target).collapse('toggle');
+            $(this).find('i').toggleClass('fa-chevron-right fa-chevron-down');
+        });
+    });
+</script>
