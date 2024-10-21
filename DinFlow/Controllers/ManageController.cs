@@ -1,12 +1,11 @@
-﻿using System;
+﻿using DinFlow.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using DinFlow.Models;
 
 namespace DinFlow.Controllers
 {
@@ -32,9 +31,9 @@ namespace DinFlow.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -333,7 +332,7 @@ namespace DinFlow.Controllers
             base.Dispose(disposing);
         }
 
-#region Auxiliares
+        #region Auxiliares
         // Usado para proteção XSRF ao adicionar logons externos
         private const string XsrfKey = "XsrfId";
 
@@ -384,6 +383,6 @@ namespace DinFlow.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }
