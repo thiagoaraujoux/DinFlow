@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <h1 class="text-center">Dashboard Financeiro</h1>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Total de Receitas</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">R$ @Model.TotalReceitas.ToString("N2")</h1>
+                    <p class="card-text">Visualize suas receitas totais.</p>
+                    <a href="@Url.Action("Create", "Receitas")" class="btn btn-lg btn-block btn-outline-primary">Cadastrar Receita</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Total de Despesas</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">R$ @Model.TotalDespesas.ToString("N2")</h1>
+                    <p class="card-text">Visualize suas despesas totais.</p>
+                    <a href="@Url.Action("Create", "Despesas")" class="btn btn-lg btn-block btn-outline-primary">Cadastrar Despesa</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Total de Economias</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">R$ @Model.TotalEconomias.ToString("N2")</h1>
+                    <p class="card-text">Visualize suas economias totais.</p>
+                    <a href="@Url.Action("Create", "Economias")" class="btn btn-lg btn-block btn-outline-primary">Cadastrar Economia</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
