@@ -1,12 +1,14 @@
-﻿@{
+﻿@model DinFlow.Models.DashboardViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<main>
-    <h1 class="text-center">Dashboard Financeiro</h1>
+<main class="container">
+    <h1 class="text-center my-4">Dashboard Financeiro</h1>
     <div class="row text-center">
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
+            <div class="card mb-4 shadow-sm" style="background-color: lightgreen;">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Total de Receitas</h4>
                 </div>
@@ -18,7 +20,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
+            <div class="card mb-4 shadow-sm" style="background-color: lightcoral;">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Total de Despesas</h4>
                 </div>
@@ -30,7 +32,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
+            <div class="card mb-4 shadow-sm" style="background-color: lightblue;">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Total de Economias</h4>
                 </div>
@@ -42,4 +44,5 @@
             </div>
         </div>
     </div>
-</main>
+
+
