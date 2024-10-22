@@ -39,8 +39,6 @@ namespace DinFlow.Controllers
         }
 
         // POST: Categorias/Create
-        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
-        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Nome")] Categoria categoria)
@@ -71,8 +69,6 @@ namespace DinFlow.Controllers
         }
 
         // POST: Categorias/Edit/5
-        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
-        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Nome")] Categoria categoria)
@@ -119,6 +115,29 @@ namespace DinFlow.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // POST: Categorias/CreateAjax
+        [HttpPost]
+        public async Task<JsonResult> CreateAjax(string Nome)
+        {
+            if (!string.IsNullOrWhiteSpace(Nome))
+            {
+                // Verifica se a categoria já existe
+                bool categoriaExiste = await db.Categorias.AnyAsync(c => c.Nome == Nome);
+                if (categoriaExiste)
+                {
+                    return Json(new { success = false, error = "A categoria já existe." });
+                }
+
+                var categoria = new Categoria { Nome = Nome };
+                db.Categorias.Add(categoria);
+                await db.SaveChangesAsync();
+
+                return Json(new { success = true });
+            }
+
+            return Json(new { success = false, error = "Nome inválido" });
         }
     }
 }

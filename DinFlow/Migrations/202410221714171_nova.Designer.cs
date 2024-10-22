@@ -7,13 +7,13 @@ namespace DinFlow.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class InicialCreate : IMigrationMetadata
+    public sealed partial class nova : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InicialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(nova));
         
         string IMigrationMetadata.Id
         {
-            get { return "202410210007305_InicialCreate"; }
+            get { return "202410221714171_nova"; }
         }
         
         string IMigrationMetadata.Source

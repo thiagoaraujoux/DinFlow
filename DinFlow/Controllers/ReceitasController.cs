@@ -39,6 +39,7 @@ namespace DinFlow.Controllers
         // GET: Receitas/Create
         public ActionResult Create()
         {
+            ViewBag.Categorias = db.Categorias.ToList();
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome");
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
             return View();
@@ -61,6 +62,7 @@ namespace DinFlow.Controllers
 
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", receita.CategoriaId);
             ViewBag.UserId = new SelectList(db.Users, "Id", "Email", receita.UserId);
+            ViewBag.Categorias = db.Categorias.ToList();
             return View(receita);
         }
 
