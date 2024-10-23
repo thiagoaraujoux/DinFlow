@@ -13,7 +13,7 @@ namespace DinFlow.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202410231655102_final"; }
+            get { return "202410231933576_final"; }
         }
         
         string IMigrationMetadata.Source
