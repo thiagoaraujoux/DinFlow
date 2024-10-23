@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DinFlow.Models
 {
@@ -12,6 +13,7 @@ namespace DinFlow.Models
         public List<ReceitaDetalhe> Receitas { get; set; }
         public List<DespesaDetalhe> Despesas { get; set; }
         public List<EconomiaDetalhe> Economias { get; set; }
+        public int CategoriaId { get; set; }
     }
 
     public class ReceitaDetalhe
@@ -29,6 +31,6 @@ namespace DinFlow.Models
     public class EconomiaDetalhe
     {
         public decimal Valor { get; set; }
-        public string Descricao { get; set; }
+        public DateTime Data { get; set; }
     }
 }

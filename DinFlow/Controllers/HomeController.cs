@@ -52,6 +52,8 @@ namespace DinFlow.Controllers
                     Despesas = despesasDetalhes,
                     Economias = economiasDetalhes
                 };
+                var categorias = db.Categorias.ToList();
+                ViewBag.Categorias = new SelectList(categorias, "Id", "Nome");
 
                 return View(model);
             }
