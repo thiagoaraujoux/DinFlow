@@ -53,9 +53,9 @@ namespace DinFlow
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "2157010681437495",
+               appSecret: "74ea623d99f3a53aee47d364bd54a6f9");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
