@@ -5,7 +5,7 @@ html, body {
     padding: 0;
     min-width: 430px;
     min-height: 920px;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden; /* Impede rolagem horizontal */
 }
 
 body {
@@ -15,7 +15,7 @@ body {
 
 .body-content {
     flex: 1 0 auto;
-    padding: 20px; /* Added padding for better spacing */
+    padding: 20px; /* Padding para melhor espaçamento */
 }
 
 footer {
@@ -24,9 +24,10 @@ footer {
     color: white;
     text-align: center;
     width: 100%;
-    padding: 10px 0; /* Added padding for better spacing */
+    padding: 10px 0; /* Padding adicional no rodapé */
 }
 
+/* Modo escuro */
 .dark-mode {
     background-color: #121212;
     color: white;
@@ -36,7 +37,7 @@ footer {
         background-color: #1e1e1e;
     }
 
-/* Estilos para o menu expandido (overlay) */
+/* Menu overlay (menu expansível em tela cheia) */
 .menu-overlay {
     position: fixed;
     top: 0;
@@ -114,17 +115,13 @@ footer {
 
     /* Ajuste o conteúdo para telas menores */
     .body-content {
-        padding: 10px; /* Less padding on smaller screens */
+        padding: 10px; /* Reduz o padding em telas menores */
     }
 
+    /* Ajustes nos cards para telas pequenas */
     .card {
-        margin-bottom: 20px; /* Add spacing between cards */
-    }
-
-    /* Responsive card styles */
-    .card {
-        flex: 1 0 100%; /* Cards will stack on smaller screens */
-        margin: 10px; /* Add margin around cards */
+        flex: 1 0 100%; /* Cards empilhados */
+        margin: 10px; /* Espaçamento ao redor dos cards */
     }
 }
 
@@ -141,25 +138,131 @@ footer {
         display: block; /* Mostra o botão de modo escuro em telas grandes */
     }
 
-    /* Grid layout for larger screens */
+    /* Layout em grid para cards em telas maiores */
     .card {
-        flex: 1 0 30%; /* Cards will be three per row */
-        margin: 10px; /* Add margin around cards */
+        flex: 1 0 30%; /* Cards em três colunas */
+        margin: 10px; /* Espaçamento ao redor dos cards */
     }
 
     .row {
-        display: flex; /* Ensure the row is a flex container */
-        flex-wrap: wrap; /* Allow cards to wrap to the next line */
+        display: flex; /* Flexbox para organizar os cards */
+        flex-wrap: wrap; /* Permite que os cards quebrem de linha */
     }
 }
 
-/* Correções nos estilos dos cards, se necessário */
+/* Estilos gerais para os cards */
 .card {
-    background-color: #ffffff; /* Cor padrão */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    background-color: #ffffff; /* Fundo padrão dos cards */
+    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
 }
 
 .dark-mode .card {
-    background-color: #222; /* Cor do card no modo escuro */
+    background-color: #222; /* Cor de fundo no modo escuro */
     color: #fff; /* Texto claro no modo escuro */
+}
+
+/* Estilos padrão da tabela */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+/* Inverter as cores na tabela */
+.table-inverted {
+    background-color: #333; /* Fundo escuro */
+    color: white; /* Texto em branco */
+}
+
+    .table-inverted th {
+        background-color: #444; /* Fundo do cabeçalho */
+        color: white; /* Texto do cabeçalho */
+    }
+
+    .table-inverted td {
+        background-color: #555; /* Fundo das células */
+        color: white; /* Texto das células */
+    }
+
+    /* Alternância de cores nas linhas */
+    .table-inverted tr:nth-child(even) {
+        background-color: #666;
+    }
+
+    .table-inverted tr:hover {
+        background-color: #777;
+        color: white;
+    }
+
+/* Estilos de modo escuro para a tabela */
+.dark-mode .table {
+    background-color: #333; /* Cor de fundo no modo escuro */
+    color: white; /* Texto em branco */
+}
+
+    .dark-mode .table th {
+        background-color: #444; /* Cor de fundo do cabeçalho no modo escuro */
+        color: white; /* Texto do cabeçalho em branco */
+    }
+
+    .dark-mode .table td {
+        background-color: #555; /* Fundo das células no modo escuro */
+        color: white; /* Texto das células em branco */
+    }
+
+    .dark-mode .table tr:nth-child(even) {
+        background-color: #666; /* Cor de fundo das linhas pares no modo escuro */
+    }
+
+    .dark-mode .table tr:hover {
+        background-color: #777; /* Cor ao passar o mouse sobre as linhas */
+        color: white; /* Texto em branco ao passar o mouse */
+    }
+
+/* CSS Correções */
+.modal-open-blur {
+    position: relative; /* Make it relative to position the blur */
+    overflow: hidden; /* Prevent overflow from the blurred background */
+}
+
+    .modal-open-blur::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit; /* Use the background of the parent */
+        filter: blur(5px);
+        z-index: -1; /* Ensure it's behind the modal */
+    }
+
+/* Estilos do modal */
+.modal-content {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode .modal-content {
+    background-color: #343a40; /* Cor de fundo do modal em modo escuro */
+    color: #fff; /* Texto do modal em modo escuro */
+}
+
+.dark-mode .btn-close {
+    background-color: #fff; /* Cor do botão de fechar em modo escuro */
+}
+
+.modal-header, .modal-body, .modal-footer {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode .modal-header,
+.dark-mode .modal-body,
+.dark-mode .modal-footer {
+    background-color: #343a40; /* Fundo do modal em modo escuro */
+    color: #fff; /* Texto do modal em modo escuro */
 }

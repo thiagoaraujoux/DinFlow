@@ -7,8 +7,9 @@
 <main class="container">
     <h1 class="text-center my-4">Dashboard Financeiro</h1>
     <div class="row text-center">
+        <!-- Card Total de Receitas -->
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm" style="background-color: lightgreen;">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Total de Receitas</h4>
                 </div>
@@ -18,11 +19,9 @@
                     <button class="btn btn-lg btn-block btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cadastrarReceitaModal">
                         Cadastrar Receita
                     </button>
-                    <!-- Botão para expandir o resumo de receitas -->
                     <button class="btn btn-sm btn-outline-secondary mt-2 toggle-collapse" data-target="#receitasCollapse">
                         Ver detalhes <i class="fas fa-chevron-right"></i>
                     </button>
-                    <!-- Resumo de receitas (collapse) -->
                     <div class="collapse mt-2" id="receitasCollapse">
                         <ul class="list-group">
                             @foreach (var receita in Model.Receitas)
@@ -35,8 +34,9 @@
             </div>
         </div>
 
+        <!-- Card Total de Despesas -->
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm" style="background-color: lightcoral;">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Total de Despesas</h4>
                 </div>
@@ -46,11 +46,9 @@
                     <button class="btn btn-lg btn-block btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cadastrarDespesaModal">
                         Cadastrar Despesa
                     </button>
-                    <!-- Botão para expandir o resumo de despesas -->
                     <button class="btn btn-sm btn-outline-secondary mt-2 toggle-collapse" data-target="#despesasCollapse">
                         Ver detalhes <i class="fas fa-chevron-right"></i>
                     </button>
-                    <!-- Resumo de despesas (collapse) -->
                     <div class="collapse mt-2" id="despesasCollapse">
                         <ul class="list-group">
                             @foreach (var despesa in Model.Despesas)
@@ -63,8 +61,9 @@
             </div>
         </div>
 
+        <!-- Card Total de Economias -->
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm" style="background-color: lightblue;">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Total de Economias</h4>
                 </div>
@@ -74,11 +73,9 @@
                     <button class="btn btn-lg btn-block btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cadastrarEconomiaModal">
                         Cadastrar Economia
                     </button>
-                    <!-- Botão para expandir o resumo de economias -->
                     <button class="btn btn-sm btn-outline-secondary mt-2 toggle-collapse" data-target="#economiasCollapse">
                         Ver detalhes <i class="fas fa-chevron-right"></i>
                     </button>
-                    <!-- Resumo de economias (collapse) -->
                     <div class="collapse mt-2" id="economiasCollapse">
                         <ul class="list-group">
                             @foreach (var economia in Model.Economias)
@@ -92,7 +89,6 @@
         </div>
     </div>
 </main>
-
 <!-- Modal para Cadastrar Receita -->
 <div class="modal fade" id="cadastrarReceitaModal" tabindex="-1" aria-labelledby="cadastrarReceitaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -113,12 +109,12 @@
                         <input type="text" class="form-control" id="descricaoReceita" name="Descricao" required>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CategoriaId, "Categoria", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+                        @Html.Label("Categoria", htmlAttributes: new { @class = "control-label" })
                         <div class="col-md-10" style="display: flex; align-items: center;">
-                            @Html.DropDownListFor(model => model.CategoriaId, ViewBag.Categorias as SelectList, "Selecione uma categoria...", new { @class = "form-control", @id = "categoriaDropdown", @style = "box-shadow: inset 3px 3px 8px #b5b5b5, inset -3px -3px 8px #ffffff; margin-right: 10px;" })
-                            <button type="button" class="btn btn-success addCategoriaBtn" style="box-shadow: 3px 3px 8px #b5b5b5, -3px -3px 8px #ffffff;">+</button>
+                            @Html.DropDownList("CategoriaId", ViewBag.Categorias as SelectList, "Selecione uma categoria...", new { @class = "form-control", id = "categoriaDropdown" })
+                            <button type="button" class="btn btn-success addCategoriaBtn">+</button>
                         </div>
-                        @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
+                        @Html.ValidationMessage("CategoriaId", "", new { @class = "text-danger" })
                     </div>
                     <div class="mb-3">
                         <label for="dataReceita" class="form-label">Data</label>
@@ -155,12 +151,12 @@
                         <input type="text" class="form-control" id="descricaoDespesa" name="Descricao" required>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.CategoriaId, "Categoria", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+                        @Html.Label("Categoria", htmlAttributes: new { @class = "control-label" })
                         <div class="col-md-10" style="display: flex; align-items: center;">
-                            @Html.DropDownListFor(model => model.CategoriaId, ViewBag.Categorias as SelectList, "Selecione uma categoria...", new { @class = "form-control", @id = "categoriaDropdown", @style = "box-shadow: inset 3px 3px 8px #b5b5b5, inset -3px -3px 8px #ffffff; margin-right: 10px;" })
-                            <button type="button" class="btn btn-success addCategoriaBtn" style="box-shadow: 3px 3px 8px #b5b5b5, -3px -3px 8px #ffffff;">+</button>
+                            @Html.DropDownList("CategoriaId", ViewBag.Categorias as SelectList, "Selecione uma categoria...", new { @class = "form-control", id = "categoriaDropdownDespesa" })
+                            <button type="button" class="btn btn-success addCategoriaBtn">+</button>
                         </div>
-                        @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
+                        @Html.ValidationMessage("CategoriaId", "", new { @class = "text-danger" })
                     </div>
                     <div class="mb-3">
                         <label for="dataDespesa" class="form-label">Data</label>
@@ -189,12 +185,12 @@
                 <form method="post" action="@Url.Action("Create", "Economias")">
                     @Html.AntiForgeryToken()
                     <div class="mb-3">
-                        <label for="dataEconomia" class="form-label">Data</label>
-                        <input type="date" class="form-control" id="dataEconomia" name="Data" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="valorEconomia" class="form-label">Valor</label>
                         <input type="number" class="form-control" id="valorEconomia" name="Valor" required step="0.01" min="0">
+                    </div>
+                    <div class="mb-3">
+                        <label for="dataEconomia" class="form-label">Data</label>
+                        <input type="date" class="form-control" id="dataEconomia" name="Data" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Cadastrar</button>
                 </form>
@@ -205,12 +201,54 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $('.toggle-collapse').on('click', function () {
-                const target = $(this).data('target');
-                $(target).collapse('toggle');
-                $(this).find('i').toggleClass('fa-chevron-right fa-chevron-down');
+    $(document).ready(function () {
+        // Adicionar nova categoria
+        $('.addCategoriaBtn').on('click', function () {
+            var novaCategoria = prompt('Digite o nome da nova categoria:');
+            if (novaCategoria) {
+                $.ajax({
+                    url: '@Url.Action("AdicionarCategoria", "Categorias")',
+                    method: 'POST',
+                    data: { nomeCategoria: novaCategoria },
+                    success: function (response) {
+                        $('#categoriaDropdown, #categoriaDropdownDespesa').append($('<option>', {
+                            value: response.categoriaId,
+                            text: response.nomeCategoria
+                        }));
+                        alert('Categoria adicionada com sucesso!');
+                    },
+                    error: function () {
+                        alert('Erro ao adicionar categoria.');
+                    }
+                });
+            }
+        });
+
+        // Toggle collapse
+        $('.toggle-collapse').on('click', function () {
+            const target = $(this).data('target');
+            $(target).collapse('toggle');
+            $(this).find('i').toggleClass('fa-chevron-right fa-chevron-down');
+        });
+        // Aplicar tema do localStorage ao carregar a página
+        document.addEventListener('DOMContentLoaded', function () {
+            const darkMode = localStorage.getItem('darkMode');
+            const body = document.body;
+
+            if (darkMode === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+
+            // Configuração do botão de alternância de tema
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', function () {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
             });
         });
+
+    });
     </script>
+
 }

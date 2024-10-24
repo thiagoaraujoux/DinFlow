@@ -47,8 +47,15 @@ namespace DinFlow.Controllers
             {
                 db.Categorias.Add(categoria);
                 await db.SaveChangesAsync();
+
+                // Adiciona uma mensagem de sucesso que expira automaticamente
+                TempData["SuccessMessage"] = "Categoria criada com sucesso!";
+
                 return RedirectToAction("Index");
             }
+
+            // Adiciona uma mensagem de erro se a criação falhar
+            TempData["ErrorMessage"] = "Erro ao criar a categoria. Verifique os dados fornecidos.";
 
             return View(categoria);
         }
@@ -77,8 +84,16 @@ namespace DinFlow.Controllers
             {
                 db.Entry(categoria).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+
+                // Adiciona uma mensagem de sucesso que expira automaticamente
+                TempData["SuccessMessage"] = "Categoria editada com sucesso!";
+
                 return RedirectToAction("Index");
             }
+
+            // Adiciona uma mensagem de erro se a edição falhar
+            TempData["ErrorMessage"] = "Erro ao editar a categoria. Verifique os dados fornecidos.";
+
             return View(categoria);
         }
 
@@ -105,6 +120,10 @@ namespace DinFlow.Controllers
             Categoria categoria = await db.Categorias.FindAsync(id);
             db.Categorias.Remove(categoria);
             await db.SaveChangesAsync();
+
+            // Adiciona uma mensagem de sucesso que expira automaticamente
+            TempData["SuccessMessage"] = "Categoria excluída com sucesso!";
+
             return RedirectToAction("Index");
         }
 
@@ -117,27 +136,28 @@ namespace DinFlow.Controllers
             base.Dispose(disposing);
         }
 
-        // POST: Categorias/CreateAjax
+        // POST: Categorias/AdicionarCategoria
         [HttpPost]
-        public async Task<JsonResult> CreateAjax(string Nome)
+        public async Task<JsonResult> AdicionarCategoria(string nomeCategoria)
         {
-            if (!string.IsNullOrWhiteSpace(Nome))
+            if (!string.IsNullOrWhiteSpace(nomeCategoria))
             {
                 // Verifica se a categoria já existe
-                bool categoriaExiste = await db.Categorias.AnyAsync(c => c.Nome == Nome);
+                bool categoriaExiste = await db.Categorias.AnyAsync(c => c.Nome == nomeCategoria);
                 if (categoriaExiste)
                 {
                     return Json(new { success = false, error = "A categoria já existe." });
                 }
 
-                var categoria = new Categoria { Nome = Nome };
-                db.Categorias.Add(categoria);
+                var novaCategoria = new Categoria { Nome = nomeCategoria };
+                db.Categorias.Add(novaCategoria);
                 await db.SaveChangesAsync();
 
-                return Json(new { success = true });
+                // Retorna a nova categoria adicionada
+                return Json(new { success = true, categoriaId = novaCategoria.Id, nomeCategoria = novaCategoria.Nome });
             }
 
-            return Json(new { success = false, error = "Nome inválido" });
+            return Json(new { success = false, error = "Nome inválido." });
         }
     }
 }
