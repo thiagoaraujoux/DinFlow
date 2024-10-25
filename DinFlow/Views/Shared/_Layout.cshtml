@@ -64,7 +64,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
     <script>
         // Função para aplicar o modo escuro se estiver salvo no localStorage
         function applyDarkMode() {
@@ -72,7 +71,13 @@
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
                 document.getElementById('theme-toggle').innerText = 'Modo Claro'; // Alterar o texto do botão
-                // Adiciona uma classe ao navbar para mudar a cor
+                // A navbar deve sempre ter bg-dark, não importa o tema
+                document.querySelector('.navbar').classList.add('bg-dark');
+            } else {
+                // Se o tema for claro, remova a classe do corpo
+                document.body.classList.remove('dark-mode');
+                document.getElementById('theme-toggle').innerText = 'Modo Escuro'; // Alterar o texto do botão
+                // A navbar deve sempre ter bg-dark, não importa o tema
                 document.querySelector('.navbar').classList.add('bg-dark');
             }
         }
@@ -83,9 +88,9 @@
             const isDarkMode = document.body.classList.contains('dark-mode');
             document.getElementById('theme-toggle').innerText = isDarkMode ? 'Modo Claro' : 'Modo Escuro';
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-            // Muda a cor da navbar dependendo do tema
-            document.querySelector('.navbar').classList.toggle('bg-dark', isDarkMode);
-            document.querySelector('.navbar').classList.toggle('bg-light', !isDarkMode);
+
+            // A navbar deve sempre ter bg-dark, não importa o tema
+            document.querySelector('.navbar').classList.add('bg-dark');
         }
 
         // Chame a função ao carregar a página para aplicar a preferência salva
