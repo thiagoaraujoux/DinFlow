@@ -266,3 +266,22 @@ footer {
     background-color: #343a40; /* Fundo do modal em modo escuro */
     color: #fff; /* Texto do modal em modo escuro */
 }
+/* Estilos do modal */
+.modal-content {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark-mode .modal-content {
+    background-color: #343a40; /* Cor de fundo do modal em modo escuro */
+    color: #fff; /* Texto do modal em modo escuro */
+}
+.dark-mode .form-control {
+    background-color: #555; /* Cor de fundo do input em modo escuro */
+    color: #fff; /* Cor do texto no input em modo escuro */
+}
+
+    .dark-mode .form-control:focus {
+        background-color: #666; /* Cor do fundo quando o input é focado */
+        color: #fff; /* Cor do texto ao focar */
+        border-color: #007bff; /* Cor da borda ao focar */
+    }
