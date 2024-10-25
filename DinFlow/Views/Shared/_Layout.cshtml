@@ -13,15 +13,31 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container d-flex justify-content-between">
-            <!-- Botão de toggle (menu mobile) com animação de hambúrguer -->
-            <button id="menu-toggle" class="menu-toggle-btn navbar-toggler" title="Menu">
-                <span class="menu-icon"></span>
-                <span class="menu-icon"></span>
-                <span class="menu-icon"></span>
+            <!-- Botão de menu responsivo -->
+            <button id="menu-toggle" class="navbar-toggler" type="button">
+                <i class="bi bi-list"></i>
             </button>
 
+            <div id="menu-overlay" class="menu-overlay">
+                <div class="menu-header">
+
+                    <button class="close-menu-btn">&times;</button>
+
+                </div>
+                <div class="menu-options">
+                    <a href="@Url.Action("Index", "Despesas")">Despesas</a>
+                    <a href="@Url.Action("Index", "Receitas")">Receitas</a>
+                    <a href="@Url.Action("Index", "Economias")">Economias</a>
+                </div>
+                <!-- Botão de modo escuro no menu toggle -->
+                <button id="menu-theme-toggle" class="btn btn-outline-light" title="Modo Escuro">
+                    <i class="bi bi-moon"></i>
+                </button>
+            </div>
+
+            <!-- Link do título DinFlow -->
             @Html.ActionLink("DinFlow", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
             <!-- Menu tradicional (visível em telas grandes) -->
@@ -43,7 +59,9 @@
                     </a>
                 }
                 <!-- Botão de modo escuro -->
-                <button id="theme-toggle" class="btn btn-outline-light" title="Modo Escuro">Modo Escuro</button>
+                <button id="theme-toggle" class="btn btn-outline-light" title="Modo Escuro">
+                    <i class="bi bi-moon"></i>
+                </button>
             </div>
         </div>
     </nav>
@@ -68,17 +86,14 @@
         // Função para aplicar o modo escuro se estiver salvo no localStorage
         function applyDarkMode() {
             const theme = localStorage.getItem('theme');
+            const themeIcons = document.querySelectorAll('#theme-toggle i, #menu-theme-toggle i');
+
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
-                document.getElementById('theme-toggle').innerText = 'Modo Claro'; // Alterar o texto do botão
-                // A navbar deve sempre ter bg-dark, não importa o tema
-                document.querySelector('.navbar').classList.add('bg-dark');
+                themeIcons.forEach(icon => icon.classList.replace('bi-moon', 'bi-sun'));
             } else {
-                // Se o tema for claro, remova a classe do corpo
                 document.body.classList.remove('dark-mode');
-                document.getElementById('theme-toggle').innerText = 'Modo Escuro'; // Alterar o texto do botão
-                // A navbar deve sempre ter bg-dark, não importa o tema
-                document.querySelector('.navbar').classList.add('bg-dark');
+                themeIcons.forEach(icon => icon.classList.replace('bi-sun', 'bi-moon'));
             }
         }
 
@@ -86,11 +101,14 @@
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             const isDarkMode = document.body.classList.contains('dark-mode');
-            document.getElementById('theme-toggle').innerText = isDarkMode ? 'Modo Claro' : 'Modo Escuro';
-            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            const themeIcons = document.querySelectorAll('#theme-toggle i, #menu-theme-toggle i');
 
-            // A navbar deve sempre ter bg-dark, não importa o tema
-            document.querySelector('.navbar').classList.add('bg-dark');
+            themeIcons.forEach(icon => {
+                icon.classList.toggle('bi-sun', isDarkMode);
+                icon.classList.toggle('bi-moon', !isDarkMode);
+            });
+
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
         }
 
         // Chame a função ao carregar a página para aplicar a preferência salva
@@ -104,20 +122,19 @@
         if (menuToggle) {
             menuToggle.addEventListener('click', function () {
                 menuOverlay.classList.toggle('show');
-                this.classList.toggle('open'); // Alterna a classe para animação de hambúrguer
             });
         }
 
-        // Fechar o menu overlay
+        // Fechar o menu overlay sem animação
         if (closeMenuBtn) {
             closeMenuBtn.addEventListener('click', function () {
                 menuOverlay.classList.remove('show');
-                menuToggle.classList.remove('open'); // Reseta o ícone de hambúrguer ao fechar
             });
         }
 
         // Event listeners for theme toggles
         document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
+        document.getElementById('menu-theme-toggle').addEventListener('click', toggleDarkMode);
     </script>
 </body>
 

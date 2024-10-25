@@ -99,6 +99,37 @@ footer {
         cursor: pointer;
     }
 
+/* Espaçamento entre os campos de entrada */
+.row {
+    margin-bottom: 15px;
+}
+
+/* Botões de login e registro com estilos de inversão de cor */
+.btn-outline-dark {
+    background-color: transparent;
+    color: #343a40;
+    border: 2px solid #343a40;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+    .btn-outline-dark:hover {
+        background-color: #343a40;
+        color: white;
+    }
+
+/* Botão de cor invertida para modo escuro */
+.dark-mode .btn-outline-dark {
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+    .dark-mode .btn-outline-dark:hover {
+        background-color: #ffffff;
+        color: #121212;
+    }
+
 /* Estilos responsivos */
 @media (max-width: 1024px) {
     .navbar-nav {
@@ -266,15 +297,8 @@ footer {
     background-color: #343a40; /* Fundo do modal em modo escuro */
     color: #fff; /* Texto do modal em modo escuro */
 }
-/* Estilos do modal */
-.modal-content {
-    transition: background-color 0.3s, color 0.3s;
-}
 
-.dark-mode .modal-content {
-    background-color: #343a40; /* Cor de fundo do modal em modo escuro */
-    color: #fff; /* Texto do modal em modo escuro */
-}
+/* Inputs no modo escuro */
 .dark-mode .form-control {
     background-color: #555; /* Cor de fundo do input em modo escuro */
     color: #fff; /* Cor do texto no input em modo escuro */
@@ -284,4 +308,29 @@ footer {
         background-color: #666; /* Cor do fundo quando o input é focado */
         color: #fff; /* Cor do texto ao focar */
         border-color: #007bff; /* Cor da borda ao focar */
+    }
+
+/* Estilos do menu circular expansível */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    opacity: 0;
+    overflow: hidden;
+}
+
+    .menu-overlay.show {
+        width: 100vw;
+        height: 100vh;
+        opacity: 1;
+        transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
     }

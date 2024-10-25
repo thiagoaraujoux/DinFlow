@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
 
@@ -57,11 +58,11 @@ namespace DinFlow
                appId: "2157010681437495",
                appSecret: "74ea623d99f3a53aee47d364bd54a6f9");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
+            {
+                ClientId = "1026680957499-1j5s11us1fg7roo3e9db8ptfrokdfhhf.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }
