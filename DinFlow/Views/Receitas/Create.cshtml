@@ -5,104 +5,122 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Create</h2>
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal" style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f0f3; border-radius: 20px; box-shadow: 10px 10px 20px #ccc, -10px -10px 20px #fff;">
-        <h4 style="text-align:center;">Cadastrar Receita</h4>
+    <div class="form-horizontal">
+        <h4>Receita</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @style = "box-shadow: inset 3px 3px 8px #b5b5b5, inset -3px -3px 8px #ffffff;" } })
+                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control", @style = "box-shadow: inset 3px 3px 8px #b5b5b5, inset -3px -3px 8px #ffffff;" } })
+                @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control", @style = "box-shadow: inset 3px 3px 8px #b5b5b5, inset -3px -3px 8px #ffffff;" } })
+                @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control", @id = "dataPicker", @style = "box-shadow: inset 3px 3px 8px #b5b5b5, inset -3px -3px 8px #ffffff;" } })
+                @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
             </div>
         </div>
 
+
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoriaId, "Categoria", htmlAttributes: new { @class = "control-label col-md-2", style = "text-align:left;" })
+            @Html.Label("Categoria", htmlAttributes: new { @class = "control-label" })
             <div class="col-md-10" style="display: flex; align-items: center;">
-                <!-- Dropdown de categorias cadastradas -->
-                @Html.DropDownListFor(model => model.CategoriaId, ViewBag.Categorias as SelectList, "Selecione uma categoria...", new { @class = "form-control", @id = "categoriaDropdown", @style = "box-shadow: inset 3px 3px 8px #b5b5b5, inset -3px -3px 8px #ffffff; margin-right: 10px;" })
-                <!-- Botão de adicionar nova categoria -->
-                <button type="button" class="btn btn-success" id="addCategoriaBtn" style="box-shadow: 3px 3px 8px #b5b5b5, -3px -3px 8px #ffffff;">+</button>
+                @Html.DropDownList("CategoriaId", ViewBag.Categorias as SelectList, "Selecione uma categoria...", new { @class = "form-control", id = "categoriaDropdownDespesa" })
+                <button type="button" class="btn btn-success addCategoriaBtn">+</button>
             </div>
-            @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
+            @Html.ValidationMessage("CategoriaId", "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10" style="text-align:center;">
-                <input type="submit" value="Create" class="btn btn-primary" style="background-color:#4CAF50; border:none; color:white; margin-top: 20px; padding:10px 20px; text-align:center; font-size:16px; box-shadow: 3px 3px 8px #b5b5b5, -3px -3px 8px #ffffff;">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div style="text-align:center;">
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default", @style = "box-shadow: 3px 3px 8px #b5b5b5, -3px -3px 8px #ffffff;" })
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-        // Ativando o seletor de calendário para o campo Data
-        $(function () {
-            $("#dataPicker").datepicker({
-                dateFormat: "dd/mm/yy", // Ajuste para o formato desejado
-                changeMonth: true,
-                changeYear: true,
-                yearRange: "1900:2100"
-            });
-        });
-
-         // Função para adicionar nova categoria via AJAX
-        $("#addCategoriaBtn").on("click", function () {
-            var categoriaNome = prompt("Digite o nome da nova categoria:");
-            if (categoriaNome) {
+        <script>
+    $(document).ready(function () {
+        // Adicionar nova categoria
+        $('.addCategoriaBtn').on('click', function () {
+            var novaCategoria = prompt('Digite o nome da nova categoria:');
+            if (novaCategoria) {
                 $.ajax({
-                    url: '@Url.Action("CreateAjax", "Categorias")', // Rota para criação rápida da categoria
-                    type: "POST",
-                    data: { Nome: categoriaNome },
-                    success: function (data) {
-                        if (data.success) {
-                            alert("Categoria adicionada com sucesso!");
-                            location.reload(); // Para recarregar a página e atualizar o dropdown de categorias
-                        } else {
-                            alert("Erro ao adicionar categoria: " + data.error);
-                        }
+                    url: '@Url.Action("AdicionarCategoria", "Categorias")',
+                    method: 'POST',
+                    data: { nomeCategoria: novaCategoria },
+                    success: function (response) {
+                        $('#categoriaDropdown, #categoriaDropdownDespesa').append($('<option>', {
+                            value: response.categoriaId,
+                            text: response.nomeCategoria
+                        }));
+                        alert('Categoria adicionada com sucesso!');
                     },
                     error: function () {
-                        alert("Erro ao tentar adicionar a categoria.");
+                        alert('Erro ao adicionar categoria.');
                     }
                 });
             }
         });
-</script>
-}
+
+        // Toggle collapse
+        $('.toggle-collapse').on('click', function () {
+            const target = $(this).data('target');
+            $(target).collapse('toggle');
+            $(this).find('i').toggleClass('fa-chevron-right fa-chevron-down');
+        });
+        // Aplicar tema do localStorage ao carregar a página
+        document.addEventListener('DOMContentLoaded', function () {
+            const darkMode = localStorage.getItem('darkMode');
+            const body = document.body;
+
+            if (darkMode === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+
+            // Configuração do botão de alternância de tema
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', function () {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+            });
+        });
+
+    });
+        </script>
+
+    }

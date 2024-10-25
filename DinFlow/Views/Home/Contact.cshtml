@@ -1,19 +1,39 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
+@{
+    ViewBag.Title = "Contato";
+}
+<div class="contato">
+    <main aria-labelledby="title">
+        <h2 id="title">@ViewBag.Title</h2>
+
+        <address>
+            Brazi - Palmas, TO<br />
+            <abbr title="Telefone">Telefone:</abbr>
+            (63) 99960-3333
+        </address>
+
+        <address>
+            <strong>Support:</strong> <a href="mailto:thiagoaraujoux@outlook.com">thiagoaraujoux@outlook.com</a><br />
+        </address>
+
+        <div class="social-media">
+
+            <a href="https://www.facebook.com/thiagoaraujo234" target="_blank" aria-label="Facebook">
+                <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/thiagoaraujoux" target="_blank" aria-label="Instagram">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/thiagoaraujo234" target="_blank" aria-label="LinkedIn">
+                <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://github.com/thiagoaraujoux" target="_blank" aria-label="GitHub">
+                <i class="bi bi-github"></i>
+            </a>
+        </div>
+</div>
 </main>

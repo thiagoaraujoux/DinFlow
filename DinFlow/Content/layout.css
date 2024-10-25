@@ -334,3 +334,51 @@ footer {
         opacity: 1;
         transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
     }
+/* Estilos para os ícones de redes sociais */
+.social-media {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    .social-media a {
+        font-size: 2rem; /* Tamanho dos ícones */
+        color: #343a40; /* Cor padrão dos ícones */
+        transition: color 0.3s, transform 0.3s; /* Transição suave */
+    }
+
+        .social-media a:hover {
+            color: #007bff; /* Cor ao passar o mouse */
+            transform: scale(1.1); /* Aumenta o ícone levemente */
+        }
+
+/* Modo escuro para os ícones */
+.dark-mode .social-media a {
+    color: #f1f1f1; /* Cor padrão dos ícones no modo escuro */
+}
+
+    .dark-mode .social-media a:hover {
+        color: #50b7f5; /* Cor ao passar o mouse no modo escuro */
+    }
+
+/* Adicionando uma animação leve no modo escuro */
+@keyframes darkModeToggle {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.dark-mode .social-media a {
+    animation: darkModeToggle 0.3s ease-in-out;
+}
+.contato {
+    display: absolute;
+    text-align: center;
+}

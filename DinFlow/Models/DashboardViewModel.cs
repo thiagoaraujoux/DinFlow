@@ -1,19 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DinFlow.Models
 {
     public class DashboardViewModel
     {
-        public decimal TotalReceitas { get; set; }
-        public decimal TotalDespesas { get; set; }
+        public int CategoriaId { get; set; }
+
+        // Dynamically calculated properties for totals
+        public decimal TotalReceitas { get; set; } // Remove 'readonly'
+        public decimal TotalDespesas { get; set; } // Remove 'readonly'
         public decimal TotalEconomias { get; set; }
 
-        // Renomeando as classes para evitar ambiguidade
+        // Renamed classes to avoid ambiguity
         public List<ReceitaDetalhe> Receitas { get; set; }
         public List<DespesaDetalhe> Despesas { get; set; }
         public List<EconomiaDetalhe> Economias { get; set; }
-        public int CategoriaId { get; set; }
+
+        // Constructor to initialize lists
+        public DashboardViewModel()
+        {
+            Receitas = new List<ReceitaDetalhe>();
+            Despesas = new List<DespesaDetalhe>();
+            Economias = new List<EconomiaDetalhe>();
+        }
     }
 
     public class ReceitaDetalhe

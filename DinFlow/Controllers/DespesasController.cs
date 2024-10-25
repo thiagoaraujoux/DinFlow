@@ -1,14 +1,16 @@
-﻿using DinFlow.Models;
-using Microsoft.AspNet.Identity;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using DinFlow.Models;
+using Microsoft.AspNet.Identity;
 
 namespace DinFlow.Controllers
 {
-    [Authorize]
     public class DespesasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,9 +19,8 @@ namespace DinFlow.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId(); // Obtém o ID do usuário autenticado
-            var receitas = db.Receitas.Where(r => r.UserId == userId).ToList();
-            var despesas = db.Despesas.Include(d => d.Categoria).Include(d => d.User);
-            return View(despesas.ToList());
+            var despesas = db.Despesas.Include(d => d.Categoria).Where(d => d.UserId == userId).ToList();
+            return View(despesas);
         }
 
         // GET: Despesas/Details/5
@@ -41,26 +42,23 @@ namespace DinFlow.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
             return View();
         }
 
         // POST: Despesas/Create
-        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
-        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Valor,Data,UserId,CategoriaId")] Despesa despesa)
+        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Despesa despesa)
         {
             if (ModelState.IsValid)
             {
+                despesa.UserId = User.Identity.GetUserId(); // Define automaticamente o UserId
                 db.Despesas.Add(despesa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", despesa.CategoriaId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", despesa.UserId);
             return View(despesa);
         }
 
@@ -77,16 +75,13 @@ namespace DinFlow.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", despesa.CategoriaId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", despesa.UserId);
             return View(despesa);
         }
 
         // POST: Despesas/Edit/5
-        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
-        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Descricao,Valor,Data,UserId,CategoriaId")] Despesa despesa)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Despesa despesa)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +90,6 @@ namespace DinFlow.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", despesa.CategoriaId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email", despesa.UserId);
             return View(despesa);
         }
 

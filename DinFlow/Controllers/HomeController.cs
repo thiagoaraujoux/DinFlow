@@ -11,23 +11,23 @@ namespace DinFlow.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                // Obtém o ID do usuário autenticado
+                // Get the authenticated user's ID
                 var userId = User.Identity.GetUserId();
 
-                // Cálculo dos totais, tratando valores nulos e filtrando por UserId
+                // Calculate totals, handling null values and filtering by UserId
                 var totalReceitas = db.Receitas
                     .Where(r => r.UserId == userId)
-                    .Sum(r => (decimal?)r.Valor) ?? 0m; // Utilize 0m para um decimal
+                    .Sum(r => (decimal?)r.Valor) ?? 0m;
 
                 var totalDespesas = db.Despesas
                     .Where(d => d.UserId == userId)
-                    .Sum(d => (decimal?)d.Valor) ?? 0m; // Utilize 0m para um decimal
+                    .Sum(d => (decimal?)d.Valor) ?? 0m;
 
                 var totalEconomias = db.Economias
                     .Where(e => e.UserId == userId)
-                    .Sum(e => (decimal?)e.Valor) ?? 0m; // Utilize 0m para um decimal
+                    .Sum(e => (decimal?)e.Valor) ?? 0m;
 
-                // Preenche as listas de detalhes
+                // Populate details lists
                 var receitasDetalhes = db.Receitas
                     .Where(r => r.UserId == userId)
                     .Select(r => new ReceitaDetalhe { Valor = (decimal)r.Valor, Descricao = r.Descricao })
@@ -40,7 +40,7 @@ namespace DinFlow.Controllers
 
                 var economiasDetalhes = db.Economias
                     .Where(e => e.UserId == userId)
-                    .Select(e => new EconomiaDetalhe { Valor = e.Valor })
+                    .Select(e => new EconomiaDetalhe { Valor = e.Valor, Data = e.Data })  // Ensure Data property exists in EconomiaDetalhe
                     .ToList();
 
                 var model = new DashboardViewModel
@@ -52,8 +52,9 @@ namespace DinFlow.Controllers
                     Despesas = despesasDetalhes,
                     Economias = economiasDetalhes
                 };
-                var categorias = db.Categorias.ToList();
-                ViewBag.Categorias = new SelectList(categorias, "Id", "Nome");
+
+                // Retrieve categories and pass to view
+                ViewBag.Categorias = new SelectList(db.Categorias.ToList(), "Id", "Nome");
 
                 return View(model);
             }
@@ -62,14 +63,12 @@ namespace DinFlow.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
