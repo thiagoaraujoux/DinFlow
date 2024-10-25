@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace DinFlow.Controllers
 {
+    [Authorize]
     public class ReceitasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
