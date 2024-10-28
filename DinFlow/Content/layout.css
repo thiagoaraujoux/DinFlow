@@ -18,14 +18,22 @@ body {
     padding: 20px; /* Padding para melhor espaçamento */
 }
 
-footer {
+.footer {
     flex-shrink: 0;
-    background-color: #343a40;
+    background-color: #0D6EFD;
     color: white;
     text-align: center;
     width: 100%;
     padding: 10px 0; /* Padding adicional no rodapé */
 }
+.footer-link {
+    text-decoration: none;
+    color: inherit; /* Mantém a cor original do link */
+}
+
+    .footer-link:hover {
+        text-decoration: underline; /* Sublinhado ao passar o mouse, se desejar */
+    }
 
 /* Modo escuro */
 .dark-mode {
@@ -317,7 +325,7 @@ footer {
     right: 0;
     width: 0;
     height: 0;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: #0D6EFD;
     color: white;
     display: flex;
     flex-direction: column;

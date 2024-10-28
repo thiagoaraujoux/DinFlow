@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
         <div class="container d-flex justify-content-between">
             <!-- Botão de menu responsivo -->
             <button id="menu-toggle" class="navbar-toggler" type="button" style="margin-right: 15px">
@@ -43,8 +43,9 @@
             <!-- Menu tradicional (visível em telas grandes) -->
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Despesas", "Index", "Despesas", new { area = "" }, new { @class = "nav-link" })</li>
+
                     <li>@Html.ActionLink("Receitas", "Index", "Receitas", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Despesas", "Index", "Despesas", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Economias", "Index", "Economias", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
@@ -55,7 +56,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a href="@Url.Action("Logoff", "Account")" class="nav-link logoff-icon" title="Logoff">
-                        <i class="bi bi-box-arrow-right"></i>
+                        
                     </a>
                 }
                 <!-- Botão de modo escuro -->
@@ -71,7 +72,7 @@
         <hr />
     </div>
 
-    <footer>
+    <footer class="footer">
         <p>&copy; @DateTime.Now.Year - DinFlow (Desenvolvido por Thiago Araújo)</p>
         <p>
             <a href="@Url.Action("Contact", "Home")" class="footer-link">Contato</a> |

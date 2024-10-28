@@ -3,9 +3,22 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
 <main class="container">
     <h1 class="text-center my-4">Dashboard Financeiro</h1>
+    <div class="d-flex justify-content-center">
+    <!-- Card Saldo --> 
+        <div class="col-md-3"> 
+            <div class="card mb-4 shadow-sm" style="background-color: @(Model.TotalReceitas - Model.TotalDespesas >= 0 ? "lightgreen" : "lightcoral");">
+                <div class="card-header text-center">
+                    <h4 class="my-0 font-weight-normal">Saldo</h4>
+                </div>
+                <div class="card-body text-center">
+                    <h1 class="card-title pricing-card-title">R$ @(Model.TotalReceitas - Model.TotalDespesas)</h1>
+                </div> 
+            </div> 
+        </div> 
+    </div>
+
     <div class="row text-center">
         <!-- Card Total de Receitas -->
         <div class="col-md-4">
@@ -33,7 +46,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Card Total de Despesas -->
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
@@ -60,7 +72,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Card Total de Economias -->
         <div class="col-md-4">
             <div class="card mb-4 shadow-sm">
@@ -87,8 +98,10 @@
                 </div>
             </div>
         </div>
+
     </div>
 </main>
+
 <!-- Modal para Cadastrar Receita -->
 <div class="modal fade" id="cadastrarReceitaModal" tabindex="-1" aria-labelledby="cadastrarReceitaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
