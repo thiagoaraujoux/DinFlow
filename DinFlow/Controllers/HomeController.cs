@@ -82,5 +82,16 @@ namespace DinFlow.Controllers
                 return View(model);
             }
         }
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Pagina de contato.";
+            return View();
+        }
+        public ActionResult About()
+        {
+            ViewBag.Message = "Pagina sobre.";
+            return View();
+        }
+
     }
 }

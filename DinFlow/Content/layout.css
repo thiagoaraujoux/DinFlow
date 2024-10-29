@@ -390,3 +390,37 @@ body {
     display: absolute;
     text-align: center;
 }
+.navbar {
+    background-color: #0D6EFD;
+}
+/* Modo escuro para a navbar */
+.dark-mode .navbar {
+    background-color: #1e1e1e; /* Cor de fundo da navbar no modo escuro */
+    color: white; /* Texto da navbar no modo escuro */
+}
+
+    /* Links da navbar no modo escuro */
+    .dark-mode .navbar a {
+        color: #f1f1f1; /* Cor dos links na navbar no modo escuro */
+    }
+
+        /* Links da navbar ao passar o mouse no modo escuro */
+        .dark-mode .navbar a:hover {
+            color: #50b7f5; /* Cor ao passar o mouse nos links no modo escuro */
+        }
+
+/* Menu toggle no modo escuro */
+.dark-mode .menu-overlay {
+    background-color: #343a40; /* Cor de fundo do menu toggle no modo escuro */
+    color: white; /* Texto do menu toggle no modo escuro */
+}
+
+    /* Links do menu toggle no modo escuro */
+    .dark-mode .menu-overlay a {
+        color: #f1f1f1; /* Cor dos links no menu toggle no modo escuro */
+    }
+
+        /* Links do menu toggle ao passar o mouse no modo escuro */
+        .dark-mode .menu-overlay a:hover {
+            color: #50b7f5; /* Cor ao passar o mouse nos links no menu toggle no modo escuro */
+        }

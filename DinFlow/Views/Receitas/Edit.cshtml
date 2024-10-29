@@ -14,11 +14,7 @@
     
 <div class="form-horizontal">
     <h4>Receita</h4>
-    <div>
-        <a class="btn btn-sm btn-primary" title="Voltar" role="button" href="@Url.Action("Index")">
-            <i class="bi bi-arrow-left"></i> Back to List
-        </a>
-    </div>
+   
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Id)

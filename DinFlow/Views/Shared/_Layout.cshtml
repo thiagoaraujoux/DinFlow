@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-sm navbar-dark">
         <div class="container d-flex justify-content-between">
             <!-- Botão de menu responsivo -->
             <button id="menu-toggle" class="navbar-toggler" type="button" style="margin-right: 15px">
@@ -24,44 +24,36 @@
 
             <div id="menu-overlay" class="menu-overlay">
                 <div class="menu-header">
-
                     <button class="close-menu-btn">&times;</button>
-
                 </div>
                 <div class="menu-options">
                     <a href="@Url.Action("Index", "Despesas")">Despesas</a>
                     <a href="@Url.Action("Index", "Receitas")">Receitas</a>
                     <a href="@Url.Action("Index", "Economias")">Economias</a>
                 </div>
-                <!-- Botão de modo escuro no menu toggle -->
                 <button id="menu-theme-toggle" class="btn btn-outline-light" title="Modo Escuro">
                     <i class="bi bi-moon"></i>
                 </button>
             </div>
 
-            <!-- Link do título DinFlow -->
             @Html.ActionLink("DinFlow", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
-            <!-- Menu tradicional (visível em telas grandes) -->
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-
                     <li>@Html.ActionLink("Receitas", "Index", "Receitas", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Despesas", "Index", "Despesas", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Economias", "Index", "Economias", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
 
-            <!-- Perfis e Login (visível em telas grandes) -->
             <div class="d-flex align-items-center">
                 @Html.Partial("_LoginPartial")
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a href="@Url.Action("Logoff", "Account")" class="nav-link logoff-icon" title="Logoff">
-                        
+                        <!-- Ícone de logoff aqui -->
                     </a>
                 }
-                <!-- Botão de modo escuro -->
                 <button id="theme-toggle" class="btn btn-outline-light" title="Modo Escuro">
                     <i class="bi bi-moon"></i>
                 </button>
