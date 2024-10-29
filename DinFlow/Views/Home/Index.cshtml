@@ -6,17 +6,17 @@
 <main class="container">
     <h1 class="text-center my-4">Dashboard Financeiro</h1>
     <div class="d-flex justify-content-center">
-    <!-- Card Saldo --> 
-        <div class="col-md-3"> 
-            <div class="card mb-4 shadow-sm" style="background-color: @(Model.TotalReceitas - Model.TotalDespesas >= 0 ? "lightgreen" : "lightcoral");">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm" style="background-color: @(Model.TotalReceitas - Model.TotalDespesas >= 0 ? "#1ABC9C" : "#E74C3C"); color: white;">
                 <div class="card-header text-center">
                     <h4 class="my-0 font-weight-normal">Saldo</h4>
                 </div>
                 <div class="card-body text-center">
                     <h1 class="card-title pricing-card-title">R$ @(Model.TotalReceitas - Model.TotalDespesas)</h1>
-                </div> 
-            </div> 
-        </div> 
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row text-center">
@@ -243,25 +243,10 @@
             $(target).collapse('toggle');
             $(this).find('i').toggleClass('fa-chevron-right fa-chevron-down');
         });
-        // Aplicar tema do localStorage ao carregar a página
-        document.addEventListener('DOMContentLoaded', function () {
-            const darkMode = localStorage.getItem('darkMode');
-            const body = document.body;
-
-            if (darkMode === 'enabled') {
-                body.classList.add('dark-mode');
-            }
-
-            // Configuração do botão de alternância de tema
-            const themeToggle = document.getElementById('theme-toggle');
-            themeToggle.addEventListener('click', function () {
-                body.classList.toggle('dark-mode');
-                const isDarkMode = body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
-            });
-        });
+        
 
     });
+
     </script>
 
 }

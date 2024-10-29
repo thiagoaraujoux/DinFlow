@@ -1,0 +1,124 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model DinFlow.Models.DashboardViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Relatórios Financeiros</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Dashboard Financeiro</h1>
+        <div class="d-flex justify-content-center">
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm" style="background-color: @(Model.TotalReceitas - Model.TotalDespesas >= 0 ? "#1ABC9C" : "#E74C3C"); color: white;">
+                    <div class="card-header text-center">
+                        <h4 class="my-0 font-weight-normal">Saldo</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <h1 class="card-title pricing-card-title">R$ @(Model.TotalReceitas - Model.TotalDespesas)</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Gráfico de Colunas
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="columnChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Gráfico de Pizza
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Gráfico de colunas com melhorias visuais
+        var columnCtx = document.getElementById('columnChart').getContext('2d');
+        var columnChart = new Chart(columnCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Receitas', 'Despesas', 'Saldo'],
+                datasets: [{
+                    label: 'Valores (R$)',
+                    data: [@Model.TotalReceitas, @Model.TotalDespesas],
+                    backgroundColor: ['#76A7FA', '#E74C3C', '#1ABC9C'],
+                    borderColor: ['#4e73df', '#c0392b', '#16a085'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                animation: {
+                    duration: 1200,
+                    easing: 'easeOutQuart'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#4e73df' },
+                        grid: { color: '#dcdde1' }
+                    },
+                    x: {
+                        ticks: { color: '#4e73df' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de pizza com melhorias visuais
+        var pieCtx = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Utilizada', 'Não Utilizada'],
+                datasets: [{
+                    label: 'Porcentagem de Receita Utilizada',
+                    data: [70, 30], // Substitua esses valores pelos valores reais
+                    backgroundColor: ['#ff6384', '#36a2eb'],
+                    hoverOffset: 8,
+                    borderColor: '#f4f6f9',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#333' }
+                    }
+                },
+                animation: {
+                    duration: 1200,
+                    easing: 'easeOutBounce'
+                }
+            }
+        });
+    </script>
+</body>
+</html>
