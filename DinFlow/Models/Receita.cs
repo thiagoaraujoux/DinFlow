@@ -30,5 +30,6 @@ namespace DinFlow.Models
         public virtual Categoria Categoria { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
+        public List<int> SelectedTags { get; set; } 
     }
 }

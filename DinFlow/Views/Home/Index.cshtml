@@ -13,24 +13,24 @@
                 <div class="card-header text-center">
                     <h4 class="my-0 font-weight-normal">Saldo conta</h4>
                 </div>
-                    <div class="card-body text-center">
-                        <h1 class="card-title pricing-card-title">R$ @(Model.TotalReceitas - Model.TotalDespesas)</h1>
+                <div class="card-body text-center">
+                    <h1 class="card-title pricing-card-title">R$ @(Model.TotalReceitas - Model.TotalDespesas)</h1>
+                </div>
+                <div class="card shadow-sm" style="background-color: @((Model.TotalReceitas - Model.TotalDespesas) + Model.TotalEconomias >= 0 ? "#1ABC9C" : "#E74C3C"); color: white;">
+                    <div class="card-header text-center">
+                        <h4 class="my-0 font-weight-normal">Total + Economias</h4>
                     </div>
-                    <div class="card shadow-sm" style="background-color: @((Model.TotalReceitas - Model.TotalDespesas) + Model.TotalEconomias >= 0 ? "#1ABC9C" : "#E74C3C"); color: white;">
-                        <div class="card-header text-center">
-                            <h4 class="my-0 font-weight-normal">Total + Economias</h4>
-                        </div>
-                        <div class="card-body text-center">
-                            <h1 class="card-title pricing-card-title">R$ @((Model.TotalReceitas - Model.TotalDespesas) + Model.TotalEconomias)</h1>
-                        </div>
+                    <div class="card-body text-center">
+                        <h1 class="card-title pricing-card-title">R$ @((Model.TotalReceitas - Model.TotalDespesas) + Model.TotalEconomias)</h1>
                     </div>
                 </div>
             </div>
+        </div>
         <div class="col-md-6">
             <canvas id="myChart" width="400" height="300"></canvas>
         </div>
     </div>
-    
+
 
     <div class="row text-center">
         <!-- Card Total de Receitas -->
@@ -142,6 +142,19 @@
                         </div>
                         @Html.ValidationMessage("CategoriaId", "", new { @class = "text-danger" })
                     </div>
+                    <!-- Campo de seleção de tags -->
+                    <div class="mb-3">
+                        <label class="form-label">Tags</label>
+                        @foreach (var tag in ViewBag.Tags as List<SelectListItem>)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="Tags" value="@tag.Value" id="tag_@tag.Value" />
+                                <label class="form-check-label" for="tag_@tag.Value">
+                                    @tag.Text
+                                </label>
+                            </div>
+                        }
+                    </div>
                     <div class="mb-3">
                         <label for="dataReceita" class="form-label">Data</label>
                         <input type="date" class="form-control" id="dataReceita" name="Data" required>
@@ -184,6 +197,19 @@
                         </div>
                         @Html.ValidationMessage("CategoriaId", "", new { @class = "text-danger" })
                     </div>
+                    <!-- Campo de seleção de tags -->
+                    <div class="mb-3">
+                        <label class="form-label">Tags</label>
+                        @foreach (var tag in ViewBag.Tags as List<SelectListItem>)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="Tags" value="@tag.Value" id="tag_@tag.Value" />
+                                <label class="form-check-label" for="tag_@tag.Value">
+                                    @tag.Text
+                                </label>
+                            </div>
+                        }
+                    </div>
                     <div class="mb-3">
                         <label for="dataDespesa" class="form-label">Data</label>
                         <input type="date" class="form-control" id="dataDespesa" name="Data" required>
@@ -199,31 +225,6 @@
     </div>
 </div>
 
-<!-- Modal para Cadastrar Economia -->
-<div class="modal fade" id="cadastrarEconomiaModal" tabindex="-1" aria-labelledby="cadastrarEconomiaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cadastrarEconomiaModalLabel">Cadastrar Economia</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="@Url.Action("Create", "Economias")">
-                    @Html.AntiForgeryToken()
-                    <div class="mb-3">
-                        <label for="valorEconomia" class="form-label">Valor</label>
-                        <input type="number" class="form-control" id="valorEconomia" name="Valor" required step="0.01" min="0">
-                    </div>
-                    <div class="mb-3">
-                        <label for="dataEconomia" class="form-label">Data</label>
-                        <input type="date" class="form-control" id="dataEconomia" name="Data" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 @section Scripts {
     <script>
@@ -278,6 +279,12 @@
                 if (newCategory) {
                     // Logic to add the category
                 }
+            });
+        });
+        $(document).ready(function () {
+            $('.select2').select2({
+                placeholder: "Selecione tags...",
+                allowClear: true
             });
         });
     </script>

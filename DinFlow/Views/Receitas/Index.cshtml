@@ -3,19 +3,22 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <h2>Receitas</h2>
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
 </p>
+
 <table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Categoria.Nome)</th>
-            <th>@Html.DisplayNameFor(model => model.User.Email)</th>
+            <th>@Html.DisplayName("User Email")</th>
             <th>@Html.DisplayNameFor(model => model.Nome)</th>
             <th>@Html.DisplayNameFor(model => model.Descricao)</th>
             <th>@Html.DisplayNameFor(model => model.Valor)</th>
             <th>@Html.DisplayNameFor(model => model.Data)</th>
+            <th>@Html.DisplayName("Categoria")</th>
+            <th>@Html.DisplayName("Tags")</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -23,12 +26,25 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Categoria.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
                 <td>@Html.DisplayFor(modelItem => item.Nome)</td>
                 <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
                 <td>@Html.DisplayFor(modelItem => item.Valor)</td>
                 <td>@Html.DisplayFor(modelItem => item.Data)</td>
+                <td>@Html.DisplayFor(modelItem => item.Categoria.Nome)</td>
+                <td>
+                    @if (item.Tags != null && item.Tags.Any())
+                    {
+                        foreach (var tag in item.Tags)
+                        {
+                            <span class="badge bg-secondary">@tag.Nome</span>
+                        }
+                    }
+                    else
+                    {
+                        <span>Sem Tags</span>
+                    }
+                </td>
                 <td class="action-buttons">
                     <a class="btn btn-sm btn-warning me-2 text-dark" title="Edit" role="button" href="@Url.Action("Edit", new { id = item.Id })">
                         <i class="bi bi-pencil-square"></i> Edit

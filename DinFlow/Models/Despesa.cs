@@ -17,7 +17,7 @@ namespace DinFlow.Models
         public string Descricao { get; set; }
 
         [Required]
-        public decimal Valor { get; set; }
+        public decimal? Valor { get; set; }
 
         [Required]
         public DateTime Data { get; set; }
@@ -30,5 +30,6 @@ namespace DinFlow.Models
         public virtual Categoria Categoria { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
+        public List<int> SelectedTags { get; set; } 
     }
 }

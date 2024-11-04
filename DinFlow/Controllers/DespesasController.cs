@@ -19,7 +19,7 @@ namespace DinFlow.Controllers
         // GET: Despesas
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId(); // Obtém o ID do usuário autenticado
+            var userId = User.Identity.GetUserId();
             var despesas = db.Despesas.Include(d => d.Categoria).Where(d => d.UserId == userId).ToList();
             return View(despesas);
         }
@@ -31,7 +31,7 @@ namespace DinFlow.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Despesa despesa = db.Despesas.Find(id);
+            Despesa despesa = db.Despesas.Include(d => d.Tags).FirstOrDefault(d => d.Id == id);
             if (despesa == null)
             {
                 return HttpNotFound();
@@ -43,23 +43,29 @@ namespace DinFlow.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome");
+            ViewBag.Tags = db.Tags.ToList();
             return View();
         }
 
         // POST: Despesas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Despesa despesa)
+        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Despesa despesa, int[] SelectedTags)
         {
             if (ModelState.IsValid)
             {
-                despesa.UserId = User.Identity.GetUserId(); // Define automaticamente o UserId
+                despesa.UserId = User.Identity.GetUserId();
+                if (SelectedTags != null)
+                {
+                    despesa.Tags = db.Tags.Where(t => SelectedTags.Contains(t.Id)).ToList();
+                }
                 db.Despesas.Add(despesa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", despesa.CategoriaId);
+            ViewBag.Tags = db.Tags.ToList();
             return View(despesa);
         }
 
@@ -70,27 +76,69 @@ namespace DinFlow.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Despesa despesa = db.Despesas.Find(id);
+
+            Despesa despesa = db.Despesas.Include(d => d.Tags).FirstOrDefault(d => d.Id == id);
             if (despesa == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", despesa.CategoriaId);
+            ViewBag.Tags = db.Tags.ToList();
+
+            despesa.SelectedTags = despesa.Tags?.Select(t => t.Id).ToList() ?? new List<int>();
             return View(despesa);
         }
 
         // POST: Despesas/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Despesa despesa)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId,SelectedTags")] Despesa despesa)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(despesa).State = EntityState.Modified;
+                var despesaFromDb = db.Despesas.Include(d => d.Tags).FirstOrDefault(d => d.Id == despesa.Id);
+
+                if (despesaFromDb == null)
+                {
+                    return HttpNotFound();
+                }
+
+                despesaFromDb.Nome = despesa.Nome;
+                despesaFromDb.Descricao = despesa.Descricao;
+                despesaFromDb.Valor = despesa.Valor;
+                despesaFromDb.Data = despesa.Data;
+                despesaFromDb.CategoriaId = despesa.CategoriaId;
+
+                var selectedTags = despesa.SelectedTags ?? new List<int>();
+                var currentTags = despesaFromDb.Tags.Select(t => t.Id).ToList();
+
+                foreach (var tag in despesaFromDb.Tags.ToList())
+                {
+                    if (!selectedTags.Contains(tag.Id))
+                    {
+                        despesaFromDb.Tags.Remove(tag);
+                    }
+                }
+
+                foreach (var tagId in selectedTags)
+                {
+                    if (!currentTags.Contains(tagId))
+                    {
+                        var tagToAdd = db.Tags.Find(tagId);
+                        if (tagToAdd != null)
+                        {
+                            despesaFromDb.Tags.Add(tagToAdd);
+                        }
+                    }
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", despesa.CategoriaId);
+            ViewBag.Tags = db.Tags.ToList();
             return View(despesa);
         }
 

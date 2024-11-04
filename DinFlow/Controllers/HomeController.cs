@@ -32,7 +32,7 @@ namespace DinFlow.Controllers
                     .ToList();
                 var despesasDetalhes = db.Despesas
                     .Where(d => d.UserId == userId)
-                    .Select(d => new DespesaDetalhe { Valor = d.Valor, Descricao = d.Descricao })
+                    .Select(d => new DespesaDetalhe { Valor = (decimal)d.Valor, Descricao = d.Descricao })
                     .ToList();
                 var economiasDetalhes = db.Economias
                     .Where(e => e.UserId == userId)
@@ -48,8 +48,11 @@ namespace DinFlow.Controllers
                     Despesas = despesasDetalhes,
                     Economias = economiasDetalhes
                 };
-
-                // Retrieve categories and pass to view
+                ViewBag.Tags = db.Tags.Select(tag => new SelectListItem
+                {
+                    Value = tag.Id.ToString(),
+                    Text = tag.Nome
+                }).ToList();
                 ViewBag.Categorias = new SelectList(db.Categorias.ToList(), "Id", "Nome");
                 return View(model);
             }
@@ -66,7 +69,7 @@ namespace DinFlow.Controllers
                 var totalEconomias = db.Economias.Where(e => e.UserId == userId).Sum(e => (decimal?)e.Valor) ?? 0m;
 
                 var receitasDetalhes = db.Receitas.Where(r => r.UserId == userId).Select(r => new ReceitaDetalhe { Valor = (decimal)r.Valor, Descricao = r.Descricao }).ToList();
-                var despesasDetalhes = db.Despesas.Where(d => d.UserId == userId).Select(d => new DespesaDetalhe { Valor = d.Valor, Descricao = d.Descricao }).ToList();
+                var despesasDetalhes = db.Despesas.Where(d => d.UserId == userId).Select(d => new DespesaDetalhe { Valor = (decimal)d.Valor, Descricao = d.Descricao }).ToList();
                 var economiasDetalhes = db.Economias.Where(e => e.UserId == userId).Select(e => new EconomiaDetalhe { Valor = e.Valor, Data = e.Data }).ToList();
 
                 var model = new DashboardViewModel

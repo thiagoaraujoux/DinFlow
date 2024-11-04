@@ -17,7 +17,7 @@ namespace DinFlow.Models
         public List<ReceitaDetalhe> Receitas { get; set; }
         public List<DespesaDetalhe> Despesas { get; set; }
         public List<EconomiaDetalhe> Economias { get; set; }
-
+        public List<string> Tags { get; set; }
         // Constructor to initialize lists
         public DashboardViewModel()
         {

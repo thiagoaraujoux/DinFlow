@@ -58,7 +58,22 @@
         <dd>
             @Html.DisplayFor(model => model.Data)
         </dd>
-
+        <dt>
+            Tags
+        </dt>
+        <dd>
+            @if (Model.Tags != null && Model.Tags.Any())
+            {
+                foreach (var tag in Model.Tags)
+                {
+                    <span class="badge bg-secondary">@tag.Nome</span> <!-- Estilo opcional para tags -->
+                }
+            }
+            else
+            {
+                <span>No tags available</span>
+            }
+        </dd>
     </dl>
 </div>
 <p>

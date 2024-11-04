@@ -38,19 +38,21 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })
+            <input type="text" class="form-control"
+                   name="Valor"
+                   value="@(Model.Valor.HasValue ? Model.Valor.Value.ToString("F2").Replace('.', ',') : "")"
+                   placeholder="Digite o valor" />
             @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        <div class="mb-3">
-            <label for="dataReceita" class="form-label">Data</label>
-            <input type="date" class="form-control" id="dataReceita" name="Data" required>
+        @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Data, new { htmlAttributes = new { @class = "form-control", type = "date", value = Model.Data.ToString("yyyy-MM-dd") } })
+            @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
         </div>
     </div>
-
-
 
     <div class="form-group">
         @Html.Label("Categoria", htmlAttributes: new { @class = "control-label" })
@@ -59,6 +61,25 @@
             <button type="button" class="btn btn-success addCategoriaBtn">+</button>
         </div>
         @Html.ValidationMessage("CategoriaId", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label>Tags</label>
+        <div>
+            @if (ViewBag.Tags != null)
+            {
+                foreach (var tag in ViewBag.Tags as List<DinFlow.Models.Tag>)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input"
+                               name="SelectedTags"
+                               value="@tag.Id"
+                               @(Model.SelectedTags != null && Model.SelectedTags.Contains(tag.Id) ? "checked" : "") />
+                        <label class="form-check-label">@tag.Nome</label>
+                    </div>
+                }
+            }
+        </div>
     </div>
 
     <div class="form-group" style="padding-top:10px; padding-right:10px">

@@ -19,8 +19,8 @@ namespace DinFlow.Controllers
         // GET: Receitas
         public ActionResult Index()
         {
-            var userId = User.Identity.GetUserId(); // Obtém o ID do usuário autenticado
-            var receitas = db.Receitas.Where(r => r.UserId == userId).ToList();
+            var userId = User.Identity.GetUserId();
+            var receitas = db.Receitas.Where(r => r.UserId == userId).Include(r => r.Tags).ToList();
             return View(receitas);
         }
 
@@ -31,7 +31,7 @@ namespace DinFlow.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Receita receita = db.Receitas.Find(id);
+            Receita receita = db.Receitas.Include(r => r.Tags).FirstOrDefault(r => r.Id == id);
             if (receita == null)
             {
                 return HttpNotFound();
@@ -42,6 +42,7 @@ namespace DinFlow.Controllers
         // GET: Receitas/Create
         public ActionResult Create()
         {
+            ViewBag.Tags = db.Tags.ToList();
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome");
             return View();
         }
@@ -49,16 +50,20 @@ namespace DinFlow.Controllers
         // POST: Receitas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Receita receita)
+        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Receita receita, int[] SelectedTags)
         {
             if (ModelState.IsValid)
             {
-                receita.UserId = User.Identity.GetUserId(); // Define automaticamente o UserId
+                receita.UserId = User.Identity.GetUserId();
+                if (SelectedTags != null)
+                {
+                    receita.Tags = db.Tags.Where(t => SelectedTags.Contains(t.Id)).ToList();
+                }
                 db.Receitas.Add(receita);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.Tags = db.Tags.ToList();
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", receita.CategoriaId);
             return View(receita);
         }
@@ -70,26 +75,75 @@ namespace DinFlow.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Receita receita = db.Receitas.Find(id);
+
+            Receita receita = db.Receitas.Include(r => r.Tags).FirstOrDefault(r => r.Id == id);
+
             if (receita == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Tags = db.Tags.ToList();
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", receita.CategoriaId);
+            receita.SelectedTags = receita.Tags?.Select(t => t.Id).ToList() ?? new List<int>();
+
             return View(receita);
         }
 
         // POST: Receitas/Edit/5
+        // POST: Receitas/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId")] Receita receita)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Descricao,Valor,Data,CategoriaId,SelectedTags")] Receita receita)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(receita).State = EntityState.Modified;
+                // Obter a receita do banco de dados com as tags associadas
+                var receitaFromDb = db.Receitas.Include(r => r.Tags).FirstOrDefault(r => r.Id == receita.Id);
+
+                if (receitaFromDb == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Atualiza os dados básicos da receita
+                receitaFromDb.Nome = receita.Nome;
+                receitaFromDb.Descricao = receita.Descricao;
+                receitaFromDb.Valor = receita.Valor;
+                receitaFromDb.Data = receita.Data;
+                receitaFromDb.CategoriaId = receita.CategoriaId;
+
+                // Atualiza as tags
+                var selectedTags = receita.SelectedTags ?? new List<int>();
+                var currentTags = receitaFromDb.Tags.Select(t => t.Id).ToList();
+
+                // Remover tags que não estão mais selecionadas
+                foreach (var tag in receitaFromDb.Tags.ToList())
+                {
+                    if (!selectedTags.Contains(tag.Id))
+                    {
+                        receitaFromDb.Tags.Remove(tag);
+                    }
+                }
+
+                // Adicionar novas tags selecionadas
+                foreach (var tagId in selectedTags)
+                {
+                    if (!currentTags.Contains(tagId))
+                    {
+                        var tagToAdd = db.Tags.Find(tagId);
+                        if (tagToAdd != null)
+                        {
+                            receitaFromDb.Tags.Add(tagToAdd);
+                        }
+                    }
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Tags = db.Tags.ToList();
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Nome", receita.CategoriaId);
             return View(receita);
         }
