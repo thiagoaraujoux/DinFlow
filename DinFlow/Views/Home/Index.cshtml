@@ -29,6 +29,7 @@
         <div class="col-md-6">
             <canvas id="myChart" width="400" height="300"></canvas>
         </div>
+
     </div>
 
 
@@ -113,7 +114,74 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+    <!-- Novo Painel com Últimas Movimentações e Ranking de Categorias -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="my-0 font-weight-normal">Últimas Movimentações</h4>
+                <button class="btn btn-sm btn-outline-secondary toggle-collapse" data-target="#movimentacoesCollapse">
+                    Ver detalhes <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+        <div class="collapse mt-2" id="movimentacoesCollapse">
+            <div class="card-body">
+                <ul class="list-group">
+                    @foreach (var transacao in Model.UltimasMovimentacoes.OrderByDescending(t => t.Data))
+                    {
+                        <li class="list-group-item">
+                            R$ @transacao.Valor.ToString("N2") - @transacao.Descricao - @transacao.Data.ToString("dd/MM/yyyy")
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Novo Painel com Ranking de Categorias -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Ranking de Categorias</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                @foreach (var item in Model.RankingCategorias.OrderByDescending(c => c.Valor).Select((c, index) => new { Categoria = c, Index = index })
+                         .Take(3)) // Para os 3 primeiros
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @if (item.Index == 0)
+                        {
+                            <span><i class="bi bi-trophy-fill text-warning"></i> @item.Categoria.Nome</span>
+                        }
+                        else if (item.Index == 1)
+                        {
+                            <span><i class="bi bi-trophy-fill text-secondary"></i> @item.Categoria.Nome</span>
+                        }
+                        else if (item.Index == 2)
+                        {
+                            <span><i class="bi bi-trophy-fill text-bronze"></i> @item.Categoria.Nome</span>
+                        }
+                        else
+                        {
+                            <span>@item.Categoria.Nome</span>
+                        }
+                        <span>R$ @item.Categoria.Valor.ToString("N2")</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <canvas id="myChart" width="400" height="300"></canvas>
+        </div>
+    </div>
+
 </main>
 <!-- Modal para Cadastrar Receita -->
 <div class="modal fade" id="cadastrarReceitaModal" tabindex="-1" aria-labelledby="cadastrarReceitaModalLabel" aria-hidden="true">
@@ -287,5 +355,6 @@
                 allowClear: true
             });
         });
+
     </script>
 }

@@ -22,12 +22,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+        <a class="btn btn-sm btn-primary" title="Back to List" role="button" href="@Url.Action("Index")">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+        <input type="submit" value="Delete" class="btn btn-sm btn-danger text-white" />
     }
 </div>
