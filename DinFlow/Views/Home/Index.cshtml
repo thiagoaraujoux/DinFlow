@@ -295,7 +295,8 @@
 
 
 @section Scripts {
-    <script>
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
         // JavaScript for chart rendering
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -340,15 +341,6 @@
             });
         });
 
-        // JavaScript for category button
-        document.querySelectorAll('.addCategoriaBtn').forEach(button => {
-            button.addEventListener('click', function () {
-                const newCategory = prompt("Digite o nome da nova categoria:");
-                if (newCategory) {
-                    // Logic to add the category
-                }
-            });
-        });
         $(document).ready(function () {
             $('.select2').select2({
                 placeholder: "Selecione tags...",
@@ -356,5 +348,27 @@
             });
         });
 
-    </script>
+         // Adicionar nova categoria
+         $('.addCategoriaBtn').on('click', function () {
+             var novaCategoria = prompt('Digite o nome da nova categoria:');
+             if (novaCategoria) {
+                 $.ajax({
+                     url: '@Url.Action("AdicionarCategoria", "Categorias")',
+                     method: 'POST',
+                     data: { nomeCategoria: novaCategoria },
+                     success: function (response) {
+                         $('#categoriaDropdown, #categoriaDropdownDespesa').append($('<option>', {
+                             value: response.categoriaId,
+                             text: response.nomeCategoria
+                         }));
+                         alert('Categoria adicionada com sucesso!');
+                     },
+                     error: function () {
+                         alert('Erro ao adicionar categoria.');
+                     }
+                 });
+             }
+         });
+
+</script>
 }

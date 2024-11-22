@@ -90,54 +90,54 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
         <script>
-    $(document).ready(function () {
-        // Adicionar nova categoria
-        $('.addCategoriaBtn').on('click', function () {
-            var novaCategoria = prompt('Digite o nome da nova categoria:');
-            if (novaCategoria) {
-                $.ajax({
-                    url: '@Url.Action("AdicionarCategoria", "Categorias")',
-                    method: 'POST',
-                    data: { nomeCategoria: novaCategoria },
-                    success: function (response) {
-                        $('#categoriaDropdown, #categoriaDropdownDespesa').append($('<option>', {
-                            value: response.categoriaId,
-                            text: response.nomeCategoria
-                        }));
-                        alert('Categoria adicionada com sucesso!');
-                    },
-                    error: function () {
-                        alert('Erro ao adicionar categoria.');
-                    }
-                });
-            }
-        });
-
-        // Toggle collapse
-        $('.toggle-collapse').on('click', function () {
-            const target = $(this).data('target');
-            $(target).collapse('toggle');
-            $(this).find('i').toggleClass('fa-chevron-right fa-chevron-down');
-        });
-        // Aplicar tema do localStorage ao carregar a página
-        document.addEventListener('DOMContentLoaded', function () {
-            const darkMode = localStorage.getItem('darkMode');
-            const body = document.body;
-
-            if (darkMode === 'enabled') {
-                body.classList.add('dark-mode');
-            }
-
-            // Configuração do botão de alternância de tema
-            const themeToggle = document.getElementById('theme-toggle');
-            themeToggle.addEventListener('click', function () {
-                body.classList.toggle('dark-mode');
-                const isDarkMode = body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        $(document).ready(function () {
+            // Adicionar nova categoria
+            $('.addCategoriaBtn').on('click', function () {
+                var novaCategoria = prompt('Digite o nome da nova categoria:');
+                if (novaCategoria) {
+                    $.ajax({
+                        url: '@Url.Action("AdicionarCategoria", "Categorias")',
+                        method: 'POST',
+                        data: { nomeCategoria: novaCategoria },
+                        success: function (response) {
+                            $('#categoriaDropdown, #categoriaDropdownDespesa').append($('<option>', {
+                                value: response.categoriaId,
+                                text: response.nomeCategoria
+                            }));
+                            alert('Categoria adicionada com sucesso!');
+                        },
+                        error: function () {
+                            alert('Erro ao adicionar categoria.');
+                        }
+                    });
+                }
             });
-        });
 
-    });
+            // Toggle collapse
+            $('.toggle-collapse').on('click', function () {
+                const target = $(this).data('target');
+                $(target).collapse('toggle');
+                $(this).find('i').toggleClass('fa-chevron-right fa-chevron-down');
+            });
+            // Aplicar tema do localStorage ao carregar a página
+            document.addEventListener('DOMContentLoaded', function () {
+                const darkMode = localStorage.getItem('darkMode');
+                const body = document.body;
+
+                if (darkMode === 'enabled') {
+                    body.classList.add('dark-mode');
+                }
+
+                // Configuração do botão de alternância de tema
+                const themeToggle = document.getElementById('theme-toggle');
+                themeToggle.addEventListener('click', function () {
+                    body.classList.toggle('dark-mode');
+                    const isDarkMode = body.classList.contains('dark-mode');
+                    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+                });
+            });
+
+        });
         </script>
 
     }
