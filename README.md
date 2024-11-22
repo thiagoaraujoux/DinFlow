@@ -34,8 +34,7 @@ Siga estas etapas para executar o projeto em sua máquina local:
 3. **Ferramentas -> Gerenciador de pacotes NuGet -> Console..**
 4. **Digite no Console**
     ```bash
-    enable-migrations
-    add-migration final
+    update-package -reinstall
     update-database
    
 ![nPH1IyGm48Nl_HL3ZyeUl0QfAwk7lNYGrVkG3YMG9YMJFIt-TvqwD1fSA2ZkfIqltyoyHwVTSiQKZwDlh4Tcs66c8IQ7S6e0hc7V6t0XpyzFSIG3d9CBmomyaoMNaGtiTz5xijd5SAjgDoCFn1DnZQZQDM-DpjMY5LEbfKtEOloclgAFoK1Fretexpv9p6ZaIWStqYozC2NfNYfBP9swS0R](https://github.com/user-attachments/assets/9725e1cf-327b-4886-9b09-be7d87bf2903)
