@@ -1,4 +1,4 @@
-﻿@model DinFlow.Models.DashboardViewModel
+﻿﻿@model DinFlow.Models.DashboardViewModel
 
 @{
     ViewBag.Title = "Home Page";
@@ -296,7 +296,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
+    <script>
         // JavaScript for chart rendering
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -370,5 +370,5 @@
              }
          });
 
-</script>
+    </script>
 }

@@ -13,7 +13,6 @@ namespace DinFlow.Models
         // Método para gerar o ClaimsIdentity, que gerencia as claims do usuário para autenticação
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            // Observe que a authenticationType deve corresponder a uma definida em CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Adicionar declarações do usuário personalizadas aqui
             return userIdentity;
@@ -32,7 +31,6 @@ namespace DinFlow.Models
         {
         }
 
-        // Método de criação do contexto
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
@@ -44,6 +42,5 @@ namespace DinFlow.Models
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Receita> Receitas { get; set; }
         public DbSet<Tag> Tags { get; set; }
-
     }
 }
