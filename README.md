@@ -31,8 +31,9 @@ Siga estas etapas para executar o projeto em sua máquina local:
 
 1. **Clone o repositório**
 2. **Abra no Visual Studio**
-3. **Ferramentas -> Gerenciador de pacotes NuGet -> Console..**
-4. **Digite no Console**
+3. **Configure seu banco de dados em 'Ferramentas' e altere a cadeia de conexão no arquivo 'Web.config'**
+4. **Ferramentas -> Gerenciador de pacotes NuGet -> Console..**
+5. **Digite no Console**
     ```bash
     update-package -reinstall
     add-migration final
